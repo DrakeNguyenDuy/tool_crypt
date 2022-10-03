@@ -16,9 +16,10 @@ public class CriptCeasar {
                 index = index + key;
                 if (index < template.length) {
                     result += Character.toString(template[index]);
+                } else {
+                    index = index % template.length;
+                    result += Character.toString(template[index]);
                 }
-                index = index % template.length;
-                result += Character.toString(template[index]);
             }
         }
         return result;
@@ -37,8 +38,10 @@ public class CriptCeasar {
                 index = index - key;
                 if (index < 0) {
                     index = template.length + index;
+                    result += Character.toString(template[index]);
+                } else {
+                    result += Character.toString(template[index]);
                 }
-                result += Character.toString(template[index]);
             }
         }
         return result;
