@@ -9,12 +9,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class CriptMove extends JPanel implements IPresentation {
     private LableWithTextArea lableWithTextArea1;
     private LableWithTextArea lableWithTextArea2;
     private JComboBox<Integer> jComboBox;
     private RadioButtonGroup radioButtonGroup;
+    private JButton jbutton_load;
 
     public CriptMove() {
         setLayout(new GridLayout(1, 2));
@@ -46,7 +48,8 @@ public class CriptMove extends JPanel implements IPresentation {
         BoxLayout boxLayout1 = new BoxLayout(jPanel1Left, BoxLayout.Y_AXIS);
         jPanel1Left.setLayout(boxLayout1);
         jPanel1Left.add(new JLabel("Or load text here"));
-        jPanel1Left.add(new JButton("Load text"));
+        jbutton_load = new JButton("Load text");
+        jPanel1Left.add(jbutton_load);
 //        end
 //        set layout for jpanel1Right and add components
         BoxLayout boxLayout2 = new BoxLayout(jPanel1Right, BoxLayout.Y_AXIS);
@@ -84,26 +87,44 @@ public class CriptMove extends JPanel implements IPresentation {
                 execute();
             }
         });
-
-
-
-
-
+        jbutton_load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    loadText();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public void execute() {
         CriptCeasar criptCeasar = new CriptCeasar();
         String plainText = lableWithTextArea1.getValue();
-        String mode =radioButtonGroup.getValue();
+        String mode = radioButtonGroup.getValue();
         String result;
         int key = (Integer) jComboBox.getSelectedItem();
-        if(mode.equals("Encript")){
+        if (mode.equals("Encript")) {
             result = criptCeasar.encript(plainText, key);
             lableWithTextArea2.setValue(result);
-        }else{
+        } else {
             result = criptCeasar.decript(plainText, key);
             lableWithTextArea2.setValue(result);
+        }
+    }
+
+    public void loadText() throws IOException {
+        String result="";
+        JFileChooser jFileChooser = new JFileChooser();
+        int i = jFileChooser.showOpenDialog(this);
+        File file = jFileChooser.getSelectedFile();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String s ="";
+        while ((s=bufferedReader.readLine())!=null){
+            result+=s;
+            lableWithTextArea1.setValue(result);
         }
     }
 }
