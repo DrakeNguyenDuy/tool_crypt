@@ -14,6 +14,7 @@ import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
 public class CeasarPanel extends JPanel {
 	private JTextField txtX;
@@ -145,5 +146,7 @@ public class CeasarPanel extends JPanel {
 							.addGap(61))))
 		);
 		setLayout(groupLayout);
+
+		
 	}
 }

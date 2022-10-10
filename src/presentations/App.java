@@ -26,7 +26,8 @@ public class App extends JFrame {
 	private JPanel contentPane;
 	private JPanel panel_1;
 	private CeasarPanel ceasarPanel = null;
-	private int panelCurrent;
+	private VigenerePanel vigenerePanel = null;
+	private JPanel panelCurrent = null;
 
 	/**
 	 * Launch the application.
@@ -82,10 +83,14 @@ public class App extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (ceasarPanel == null) {
-					ceasarPanel = new CeasarPanel();
-					panelCurrent = 0;
-					panel_1.add(ceasarPanel);
+					System.out.println("fffff");
+//					ceasarPanel = new CeasarPanel();
+					vigenerePanel = new VigenerePanel();
+//					panel_1.remove(panelCurrent);
+					panel_1.add(vigenerePanel);
+					repaint();
 					validate();
+//					panelCurrent = ceasarPanel;
 				}
 
 			}
@@ -97,18 +102,14 @@ public class App extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panel_1.remove(panelCurrent);
-				resetComponent();
-				validate();
-				repaint();
-				panelCurrent = 1;
-//				if(ceasarPanel==null) {
-//					ceasarPanel = new CeasarPanel();
-//					panelCurrent=ceasarPanel;
-//					panel_1.add(ceasarPanel);
-//					validate();	
-//				}
-
+				if (vigenerePanel == null) {
+					System.out.println("ccc");
+					vigenerePanel = new VigenerePanel();
+					panel_1.remove(panelCurrent);
+					panel_1.add(vigenerePanel);
+					validate();
+					panelCurrent= vigenerePanel;
+				}
 			}
 		});
 
@@ -137,17 +138,22 @@ public class App extends JFrame {
 		panel.add(btnNewButton);
 
 	}
-
-	private void resetComponent() {
-		switch (panelCurrent) {
-		case 0: {
-			System.out.println("c");
-			ceasarPanel = null;
-			System.out.println(ceasarPanel);
-			break;
-		}
-		default:
-
-		}
+	private void removeComponent() {
+		
 	}
+
+//	private void resetComponent() {
+//		switch (panelCurrent) {
+//		case 0: {
+//			ceasarPanel = null;
+//			break;
+//		}
+//		case 1: {
+//			vigenerePanel = null;
+//			break;
+//		}
+//		default:
+//
+//		}
+//	}
 }
