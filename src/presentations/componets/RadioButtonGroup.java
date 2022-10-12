@@ -16,6 +16,7 @@ public class RadioButtonGroup {
         for (int i = 0; i < labels.length; i++) {
             JRadioButton jRadioButton = new JRadioButton(labels[i]);
             jRadioButton.setActionCommand(labels[i]);
+            jRadioButton.setBounds(0, 21, 111, 23);
             this.buttonGroup.add(jRadioButton);
             if (i == 0) {
                 jRadioButton.setSelected(true);
