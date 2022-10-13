@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import business.CriptCeasar;
-import presentations.componets.RadioButtonGroup;
+
 
 public class CeasarPresentation extends JPanel implements IPresentation {
 	private JTextField textField;
@@ -84,8 +84,8 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Encrypt");
 		rdbtnNewRadioButton.setBounds(0, 21, 111, 23);
-		rdbtnNewRadioButton.setActionCommand(rdbtnNewRadioButton.getText());
 		rdbtnNewRadioButton.setSelected(true);
+		rdbtnNewRadioButton.setActionCommand(rdbtnNewRadioButton.getText());
 		panel_1.add(rdbtnNewRadioButton);
 
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Decrypt");
@@ -99,7 +99,6 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 
 		JLabel lblNewLabel_3 = new JLabel("Enter your key");
 		lblNewLabel_3.setBounds(0, 58, 100, 14);
-		lblNewLabel_3.setToolTipText("con cò");
 		panel_1.add(lblNewLabel_3);
 
 		textField = new JTextField();
