@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface IPresentation {
      void execute();
-     void loadText() throws IOException;
-     void saveFile();
+     void loadText(String type) throws IOException;
+     void saveFile(String type);
 }
