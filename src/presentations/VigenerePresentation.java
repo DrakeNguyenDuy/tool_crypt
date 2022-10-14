@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import business.CriptCeasar;
 import business.Vigenere;
+import helppers.Constants;
 import helppers.Templates;
 
 import javax.swing.ButtonGroup;
@@ -125,7 +126,7 @@ public class VigenerePresentation extends JPanel implements IPresentation {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadText();
+					loadText(Constants.IMPORT_TEXT);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -196,7 +197,7 @@ public class VigenerePresentation extends JPanel implements IPresentation {
 	}
 
 	@Override
-	public void loadText() throws IOException {
+	public void loadText(String type) throws IOException {
 		String result = "";
 		JFileChooser jFileChooser = new JFileChooser();
 		jFileChooser.showOpenDialog(this);
@@ -210,7 +211,7 @@ public class VigenerePresentation extends JPanel implements IPresentation {
 	}
 
 	@Override
-	public void saveFile() {
+	public void saveFile(String type) {
 		try {
 			JFileChooser jFileChooser = new JFileChooser();
 			jFileChooser.showSaveDialog(this);

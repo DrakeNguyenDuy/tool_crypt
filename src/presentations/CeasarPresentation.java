@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import business.CriptCeasar;
+import helppers.Constants;
 
 
 public class CeasarPresentation extends JPanel implements IPresentation {
@@ -116,7 +117,7 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadText();
+					loadText(Constants.IMPORT_TEXT);
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
@@ -132,7 +133,7 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveFile();
+				saveFile(Constants.SAVE_TEXT);
 			}
 		});
 
@@ -172,7 +173,7 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 		}
 	}
 
-	public void loadText() throws IOException {
+	public void loadText(String type) throws IOException {
 		String result = "";
 		JFileChooser jFileChooser = new JFileChooser();
 		jFileChooser.showOpenDialog(this);
@@ -185,7 +186,7 @@ public class CeasarPresentation extends JPanel implements IPresentation {
 		}
 	}
 
-	public void saveFile() {
+	public void saveFile(String type) {
 		try {
 			JFileChooser jFileChooser = new JFileChooser();
 			jFileChooser.showSaveDialog(this);
