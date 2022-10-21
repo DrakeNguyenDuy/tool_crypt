@@ -1,7 +1,10 @@
 package helppers;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,27 +22,49 @@ public class ReadFile {
 		return readFile;
 	}
 
-	public String readFile(String path, JPanel jPanel) {
+//	public String readFile(String path, JPanel jPanel) {
+//		try {
+//			BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
+//			String textLoad = "";
+//			String line;
+//			try {
+//				while ((line = bufferedReader.read) != null) {
+//					textLoad += line;
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			bufferedReader.close();
+//			return textLoad;
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//
+//	}
+	public byte[] readFile(String path, JPanel jpannel) {
 		try {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
-			String textLoad = "";
-			String line;
-			try {
-				while ((line = bufferedReader.readLine()) != null) {
-					textLoad += line;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File(path)));
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			int byteRead = 0;
+			byte[] buffered = new byte[1024];
+			while ((byteRead = bufferedInputStream.read(buffered)) != -1) {
+				byteArrayOutputStream.write(buffered, 0, byteRead);
 			}
-			bufferedReader.close();
-			return textLoad;
+			byteArrayOutputStream.flush();
+			bufferedInputStream.close();
+			byteArrayOutputStream.close();
+			return byteArrayOutputStream.toByteArray();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			// TODO: handle exception
 			return null;
 		}
-
 	}
 }
