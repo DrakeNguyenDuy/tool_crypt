@@ -74,18 +74,16 @@ public class DES {
 	public byte[] loadKey(String path) {
 		try {
 			ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File(path)));
-			try {
-				secretKey = (SecretKey) objectInputStream.readObject();
-				objectInputStream.close();
-				return objectInputStream.readAllBytes();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				return new byte[0];
-			}
+			secretKey = (SecretKey) objectInputStream.readObject();
+			objectInputStream.close();
+			return secretKey.getEncoded();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return new byte[0];
 		} catch (IOException e) {
+			e.printStackTrace();
+			return new byte[0];
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return new byte[0];
 		}
@@ -183,13 +181,13 @@ public class DES {
 		return secretKey.getEncoded();
 	}
 
-	public static void main(String[] args)
-			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
-		DES des = new DES();
-//		System.out.println(des.createKey("12345678").getEncoded());;
-//		des.saveKey("D:\\HKI-NAM4\\ATBMTT\\test attbm\\long.txt");
-//		des.loadKey("D:\\HKI-NAM4\\ATBMTT\\test attbm\\long.txt");
-//		des.encryptFile("C:\\Users\\Nguyen Duy Long\\OneDrive\\Tài liệu\\meolon.png", "D:\\newfolder\\encrypt.jpg");
-//		des.decryptFile("D:\\newfolder\\encrypt.jpg", "D:\\newfolder\\decrypt.jpg");
-	}
+//	public static void main(String[] args)
+//			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
+//		DES des = new DES();
+////		System.out.println(des.createKey("12345678").getEncoded());;
+////		des.saveKey("D:\\HKI-NAM4\\ATBMTT\\test attbm\\long.txt");
+////		des.loadKey("D:\\HKI-NAM4\\ATBMTT\\test attbm\\long.txt");
+////		des.encryptFile("C:\\Users\\Nguyen Duy Long\\OneDrive\\Tài liệu\\meolon.png", "D:\\newfolder\\encrypt.jpg");
+////		des.decryptFile("D:\\newfolder\\encrypt.jpg", "D:\\newfolder\\decrypt.jpg");
+//	}
 }
