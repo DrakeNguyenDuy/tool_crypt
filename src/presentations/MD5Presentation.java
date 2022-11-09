@@ -1,5 +1,6 @@
 package presentations;
 
+import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,20 +16,20 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import business.MD5;
+import business.Hashing;
 import helppers.Constants;
 import helppers.ReadFile;
 import helppers.WriteFile;
 
-import java.awt.Button;
-import java.awt.Color;
-
+//@SuppressWarnings("serial")
 public class MD5Presentation extends JPanel implements IPresentation {
 	private ButtonGroup buttonGroup;
 	private JTextArea taText;
 	private JTextArea taResult;
+	private Hashing hashing;
 
 	public MD5Presentation() {
+		this.hashing = new Hashing();
 		setBorder(new EmptyBorder(0, 5, 5, 0));
 		setSize(550, 450);
 		setLayout(null);
@@ -97,19 +98,18 @@ public class MD5Presentation extends JPanel implements IPresentation {
 		btnNewButton.setBounds(0, 51, 105, 23);
 		panel_1.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Save hash");
+		JButton btnNewButton_1 = new JButton("Save Result");
 		btnNewButton_1.setForeground(Color.WHITE);
 		btnNewButton_1.setBackground(SystemColor.textHighlight);
 		btnNewButton_1.setBounds(115, 51, 105, 23);
 		panel_1.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveFile(null);
 			}
 		});
-
 
 		JButton btnNewButton_2 = new JButton("Start");
 		btnNewButton_2.setBounds(69, 305, 105, 23);
@@ -130,9 +130,11 @@ public class MD5Presentation extends JPanel implements IPresentation {
 		String input = taText.getText();
 		String result = "";
 		if (mode.equals(Constants.ENCRYPT)) {
-			result = MD5.getInstance().encrypt(input.getBytes(), getFocusTraversalKeysEnabled());
+//			result = MD5.getInstance().encrypt(input.getBytes(), getFocusTraversalKeysEnabled());
+			result = this.hashing.encrypt(Constants.MD5, input.getBytes(), true);
 		} else {
-			result = MD5.getInstance().decrypt(input);
+//			result = MD5.getInstance().decrypt(input);
+			result = this.hashing.decrypt(input, Constants.MD5);
 		}
 		taResult.setText(result);
 	}

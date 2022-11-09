@@ -67,12 +67,12 @@ public class RSA {
 		return byteResult;
 	}
 
-//	public static void main(String[] args) throws IllegalBlockSizeException {
-//		RSA bdx = new RSA();
-//		bdx.createKey(3072);
-//		String s1 = "ddd";
-//		String s = "đại học nông lâm thành phố hồ chí minh nên làm được gì thì làm ai mà biết được ai có nói gì đâu mà nói nhưng mà ai có boeev hufuefwuefnw fweuf wef we f  fwefwef wuef ưefwiefwejfnwefweufwuefwefwufeuwhfwuefhwuefhwue";
-//		String e = bdx.encrypt(s.getBytes(), Constants.PUBLIC_KEY);
-//		bdx.decrypt(e, Constants.PRIVATE_KEY);
-//	}
+	public static void main(String[] args) throws IllegalBlockSizeException, InvalidKeyException, ClassCastException, BadPaddingException {
+		RSA bdx = new RSA();
+		RSAKey key = new RSAKey();
+		key.createKey(2048);
+		String s1 = "ddd";
+		String e= bdx.encrypt(s1.getBytes(), Constants.PUBLIC_KEY, key.getPublicKey());
+		bdx.decrypt(e, Constants.PRIVATE_KEY, key.getPrivateKey());
+	}
 }

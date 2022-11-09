@@ -152,7 +152,7 @@ public class RSAPresentation extends JPanel implements IPresentation {
 		panel_1.add(lblNewLabel_3);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "1024", "2048", "3072", "7680", "204800" }));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "1024", "2048", "4096" }));
 		comboBox.setBounds(0, 85, 135, 22);
 		panel_1.add(comboBox);
 
