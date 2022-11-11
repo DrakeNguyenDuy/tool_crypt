@@ -12,6 +12,7 @@ public class Constants {
 	public static final String MD5 = "MD5";
 	public static final String SHA1 = "SHA-1";
 	public static final String SHA256 = "SHA-256";
+	public static final String SHA512 = "SHA-512";
 	public static final String pathPlTextSHA1="src/store/storesha1_pt.txt";
 	public static final String pathHashSHA1="src/store/storesha1_hash.txt";
 	public static final String pathPlTextMD5="src/store/storemd5_pt.txt";
