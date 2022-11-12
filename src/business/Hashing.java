@@ -25,12 +25,9 @@ public class Hashing {
 		this.storeHasing = new ArrayList<>();
 	}
 
-	/*encrypt plain text to hashing code
-	 *input: 
-	 *+ typeHashing: Type hashing
-	 *+ plaintText: data input
-	 *+ append: is save in store
-	 *output: hashing code 
+	/*
+	 * encrypt plain text to hashing code input: + typeHashing: Type hashing +
+	 * plaintText: data input + append: is save in store output: hashing code
 	 */
 	public String encrypt(String typeHasing, byte[] plainText, boolean append) {
 		try {
@@ -43,8 +40,7 @@ public class Hashing {
 				String pathStoreHashing = null;
 				String pathStorePlaintext = null;
 				/*
-				 * get path of store hashing code
-				 * and path of store plain text
+				 * get path of store hashing code and path of store plain text
 				 */
 				switch (typeHasing) {
 				case Constants.MD5:
@@ -59,6 +55,10 @@ public class Hashing {
 					pathStoreHashing = Constants.pathHashSHA256;
 					pathStorePlaintext = Constants.pathPlTextSHA256;
 					break;
+				case Constants.SHA512:
+					pathStoreHashing = Constants.pathHashSHA512;
+					pathStorePlaintext = Constants.pathPlTextSHA512;
+					break;
 				default:
 					break;
 				}
@@ -71,9 +71,8 @@ public class Hashing {
 			return null;
 		}
 	}
+	// add hashing code to store hashing
 
-	
-	//add hashing code to store hashing
 	public void addHashToStore(String pathStoreHash, String newHash) {
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(pathStoreHash), true));
@@ -87,7 +86,7 @@ public class Hashing {
 		}
 	}
 
-	//add plaint text to store plaint text
+	// add plaint text to store plaint text
 	public void addPTToStore(String pathPlTextStore, String pt) {
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(pathPlTextStore), true));
@@ -101,11 +100,11 @@ public class Hashing {
 		}
 	}
 
-	//load hashing from store
+	// load hashing from store
 	public void loadHashing(String typeHashing) {
 		try {
 			String path = null;
-			//get path by type hashing
+			// get path by type hashing
 			switch (typeHashing) {
 			case Constants.MD5:
 				path = Constants.pathHashMD5;
@@ -116,10 +115,13 @@ public class Hashing {
 			case Constants.SHA256:
 				path = Constants.pathHashSHA256;
 				break;
+			case Constants.SHA512:
+				path = Constants.pathHashSHA512;
+				break;
 			default:
 				break;
 			}
-			//load hashing
+			// load hashing
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
 			Stream<String> lines = bufferedReader.lines();
 			lines.distinct().forEach(item -> this.storeHasing.add(item));
@@ -135,7 +137,7 @@ public class Hashing {
 	public void loadPT(String typeHashing) throws IOException {
 		try {
 			String path = null;
-			//get path store plant text
+			// get path store plant text
 			switch (typeHashing) {
 			case Constants.MD5:
 				path = Constants.pathPlTextMD5;
@@ -146,10 +148,13 @@ public class Hashing {
 			case Constants.SHA256:
 				path = Constants.pathPlTextSHA256;
 				break;
+			case Constants.SHA512:
+				path = Constants.pathPlTextSHA512;
+				break;
 			default:
 				break;
 			}
-			//load plant text 
+			// load plant text
 			this.storePt = new ArrayList<>();
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
 			Stream<String> lines = bufferedReader.lines();
@@ -161,14 +166,14 @@ public class Hashing {
 		}
 	}
 
-	//decrypt is load hashing and plait text stored 
+	// decrypt is load hashing and plait text stored
 	public String decrypt(String hashingCode, String typeHashing) {
-		//load all hashing stored
+		// load all hashing stored
 		loadHashing(typeHashing);
-		//check is contain hashing code finding
+		// check is contain hashing code finding
 		if (storeHasing.contains(hashingCode)) {
 			try {
-				//load plain text by hashing code
+				// load plain text by hashing code
 				loadPT(typeHashing);
 				int index = storeHasing.indexOf(hashingCode);
 				String pt = this.storePt.get(index);
@@ -178,7 +183,7 @@ public class Hashing {
 				return null;
 			}
 		}
-		//not found hashing code
+		// not found hashing code
 		return "Not found";
 	}
 }

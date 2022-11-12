@@ -2,11 +2,8 @@ package helppers;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 public class WriteFile {
 	private static WriteFile writeFile=null;
@@ -17,18 +14,11 @@ public class WriteFile {
 		}
 		return writeFile;
 	}
-	public void writeFile(String path, byte[] byteWrite) {
-		try {
-			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(path)));
-			bufferedOutputStream.flush();
-			bufferedOutputStream.write(byteWrite);
-			bufferedOutputStream.close();
-			JOptionPane.showMessageDialog(null, "Save file success!!");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Opps file not found!!");
-		} catch (IOException e) {
 
-		}
+	public void writeFile(String path, byte[] byteWrite) throws IOException {
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(path)));
+		bufferedOutputStream.write(byteWrite);
+		bufferedOutputStream.flush();
+		bufferedOutputStream.close();
 	}
 }

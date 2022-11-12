@@ -1,5 +1,6 @@
 package presentations;
 
+import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -19,8 +21,6 @@ import business.Hashing;
 import helppers.Constants;
 import helppers.ReadFile;
 import helppers.WriteFile;
-
-import java.awt.Color;
 
 public class SHA256Presentation extends JPanel implements IPresentation{
 	private ButtonGroup buttonGroup;
@@ -151,6 +151,11 @@ public class SHA256Presentation extends JPanel implements IPresentation{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showSaveDialog(this);
 		String path = fileChooser.getCurrentDirectory() + "\\" + fileChooser.getSelectedFile().getName();
-		WriteFile.getInstance().writeFile(path, taResult.getText().getBytes());
+		try {
+			WriteFile.getInstance().writeFile(path, taResult.getText().getBytes());
+			JOptionPane.showMessageDialog(this, "Save success!!");
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 }

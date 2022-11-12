@@ -253,8 +253,14 @@ public class DESPresentation extends JPanel implements IPresentation {
 		String path = jFileChooser.getCurrentDirectory() + "\\" + jFileChooser.getSelectedFile().getName();
 		if (type.equals(Constants.SAVE_KEY)) {
 			DES.getInstance().saveKey(path);
+			JOptionPane.showMessageDialog(this, "Save success!!");
 		} else {
-			WriteFile.getInstance().writeFile(path, byteResult);
+			try {
+				WriteFile.getInstance().writeFile(path, byteResult);
+				JOptionPane.showMessageDialog(this, "Save success!!");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage());
+			}
 		}
 	}
 }
