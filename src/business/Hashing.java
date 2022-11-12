@@ -71,8 +71,8 @@ public class Hashing {
 			return null;
 		}
 	}
-
 	// add hashing code to store hashing
+
 	public void addHashToStore(String pathStoreHash, String newHash) {
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(pathStoreHash), true));

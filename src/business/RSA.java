@@ -51,12 +51,12 @@ public class RSA {
 		if (object instanceof PublicKey) {
 			PublicKey publicKey = (PublicKey) object;
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-			RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;//cast to RSAPublickey to get bit length of key
+			RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;// cast to RSAPublickey to get bit length of key
 			keySize = rsaPublicKey.getModulus().bitLength();
 		} else {
 			PrivateKey privateKey = (PrivateKey) object;
 			cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;//cast to RSAPrivatekey to get bit length of key
+			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;// cast to RSAPrivatekey to get bit length of key
 			keySize = rsaPrivateKey.getModulus().bitLength();
 		}
 		// read all byte
@@ -86,12 +86,12 @@ public class RSA {
 		if (object instanceof PublicKey) {
 			PublicKey publicKey = (PublicKey) object;
 			cipher.init(Cipher.DECRYPT_MODE, publicKey);
-			RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;//cast to RSAPublickey to get bit length of key
+			RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;// cast to RSAPublickey to get bit length of key
 			keySize = rsaPublicKey.getModulus().bitLength();
 		} else {
 			PrivateKey privateKey = (PrivateKey) object;
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
-			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;//cast to RSAPrivatekey to get bit length of key
+			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;// cast to RSAPrivatekey to get bit length of key
 			keySize = rsaPrivateKey.getModulus().bitLength();
 		}
 		// decode base64 string to byte array
