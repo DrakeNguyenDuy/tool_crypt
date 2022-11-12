@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -153,7 +154,12 @@ public class MD5Presentation extends JPanel implements IPresentation {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showSaveDialog(this);
 		String path = fileChooser.getCurrentDirectory() + "\\" + fileChooser.getSelectedFile().getName();
-		WriteFile.getInstance().writeFile(path, taResult.getText().getBytes());
+		try {
+			WriteFile.getInstance().writeFile(path, taResult.getText().getBytes());
+			JOptionPane.showMessageDialog(this, "Save success!!");
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 }

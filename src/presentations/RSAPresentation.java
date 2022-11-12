@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.BadPaddingException;
@@ -272,7 +272,7 @@ public class RSAPresentation extends JPanel implements IPresentation {
 		String mode = buttonGroup.getSelection().getActionCommand();
 		if (mode.equals(Constants.ENCRYPT)) {
 			try {
-				result = RSA.getInstance().encrypt(taText.getText().getBytes(), mode, keyExcute);
+				result = RSA.getInstance().encrypt(Base64.getDecoder().decode(taText.getText()), keyExcute);
 			} catch (IllegalBlockSizeException e) {
 				JOptionPane.showMessageDialog(this, e.getMessage());
 			} catch (InvalidKeyException e) {
@@ -284,7 +284,7 @@ public class RSAPresentation extends JPanel implements IPresentation {
 			}
 		} else {
 			try {
-				result = new String(RSA.getInstance().decrypt(taText.getText(), mode, keyExcute));
+				result = RSA.getInstance().decrypt(taText.getText(), keyExcute);
 			} catch (IllegalBlockSizeException e) {
 				JOptionPane.showMessageDialog(this, e.getMessage());
 			} catch (InvalidKeyException e) {
@@ -305,17 +305,10 @@ public class RSAPresentation extends JPanel implements IPresentation {
 		String path = fileChooser.getCurrentDirectory() + "\\" + fileChooser.getSelectedFile().getName();
 		if (type.equals(Constants.IMPORT_TEXT)) {
 			byteText = ReadFile.getInstance().readFile(path, null);
-//			File f = new File(path);
-//			System.out.println(f.getName());
-//			if(!f.getName().split(".")[1].equals("txt")) {
-//				taText.setText(Base64.getEncoder().encodeToString(byteText));	
-//			}
-//			else {
-//				taText.setText(new String(byteText));
-//			}
-			taText.setText(new String(byteText));
+			taText.setText(Base64.getEncoder().encodeToString(byteText));
 		} else {
-			byteKey = RSAKey.getInstance().loadKey(path);
+			byteKey = RSAKey.getInstance().loadKey(path);// load key with type a object( a sign for object key in RSA
+															// instance )
 			taKey.setText(Base64.getEncoder().encodeToString(byteKey));
 		}
 	}
@@ -327,9 +320,14 @@ public class RSAPresentation extends JPanel implements IPresentation {
 		String path = fileChooser.getCurrentDirectory() + "\\" + fileChooser.getSelectedFile().getName();
 		if (type.equals(Constants.PRIVATE_KEY) || type.equals(Constants.PUBLIC_KEY)) {
 			RSAKey.getInstance().saveKey(path, type);
+			JOptionPane.showMessageDialog(this, "Save file success");
 		} else {
-			WriteFile.getInstance().writeFile(path, result.getBytes());
+			try {
+				WriteFile.getInstance().writeFile(path, Base64.getDecoder().decode(taResult.getText().getBytes()));
+				JOptionPane.showMessageDialog(this, "Save file success");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage());
+			}
 		}
-		JOptionPane.showMessageDialog(this, "Save file success");
 	}
 }
