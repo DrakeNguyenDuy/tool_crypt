@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.InvalidKeyException;
-import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.BadPaddingException;
@@ -40,7 +39,6 @@ public class RSAPresentation extends JPanel implements IPresentation {
 	private JTextArea taPublicKey;
 	private JTextArea taPrivateKey;
 	private byte[] byteText = null;
-	private byte[] byteResult = null;
 	private byte[] byteKey = null;
 	private int indexChose = -1;
 	private JTextArea taKey;
