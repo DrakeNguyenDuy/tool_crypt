@@ -40,7 +40,6 @@ public class RSAPresentation extends JPanel implements IPresentation {
 	private JTextArea taPublicKey;
 	private JTextArea taPrivateKey;
 	private byte[] byteText = null;
-	private byte[] byteResult = null;
 	private byte[] byteKey = null;
 	private int indexChose = -1;
 	private JTextArea taKey;

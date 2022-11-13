@@ -31,7 +31,7 @@ public class Vigenere extends ACryptSymmetric {
 																									// text in templates
 			int index = positionCharText + positionCharKey;// this position intersect between the position text (column)
 															// and the position key (row)
-			result += super.moveSingleCharEncrypt(index, charText[i]);
+			result += super.moveSingleCharEncrypt(index, Character.toString(charText[i]));
 		}
 		return result;
 	}
@@ -52,7 +52,7 @@ public class Vigenere extends ACryptSymmetric {
 			int positionCharCypherText = Templates.templateEN.indexOf(Character.toString(charCiphertext[i]));
 			int index = positionCharCypherText - positionCharKey;// this position intersect between cipher text (column)
 																	// and the position key (row)
-			result += super.moveSingleCharDecrypt(index, charCiphertext[i]);
+			result += super.moveSingleCharDecrypt(index, Character.toString(charCiphertext[i]));
 		}
 		return result;
 	}

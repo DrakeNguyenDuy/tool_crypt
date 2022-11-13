@@ -1,18 +1,35 @@
 package presentations;
 
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.util.Base64;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 
-public class HillPresentation extends JPanel {
+import business.Hill;
+import business.RSA;
+import helppers.Constants;
 
+import javax.swing.JScrollPane;
+
+public class HillPresentation extends JPanel implements IPresentation{
+	private JTextArea taText;
+	private JTextArea taResult;
+	private ButtonGroup buttonGroup;
+	private JTextArea key;
 	/**
 	 * Create the panel.
 	 */
@@ -31,20 +48,26 @@ public class HillPresentation extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblNewLabel);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(0, 24, 229, 200);
-		textArea.setLineWrap(true);
-		panel.add(textArea);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 24, 229, 200);
+		panel.add(scrollPane);
+		
+		taText = new JTextArea();
+		scrollPane.setViewportView(taText);
+		taText.setLineWrap(true);
 		
 		JLabel lblNewLabel_1 = new JLabel("Your result");
 		lblNewLabel_1.setBounds(0, 235, 100, 14);
 		panel.add(lblNewLabel_1);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(0, 250, 229, 200);
-		textArea_1.setLineWrap(true);
-		textArea_1.setColumns(10);
-		panel.add(textArea_1);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 250, 229, 200);
+		panel.add(scrollPane_1);
+		
+		taResult = new JTextArea();
+		scrollPane_1.setViewportView(taResult);
+		taResult.setLineWrap(true);
+		taResult.setColumns(10);
 		
 		
 		JPanel panel_1 = new JPanel();
@@ -58,20 +81,29 @@ public class HillPresentation extends JPanel {
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Encrypt");
 		rdbtnNewRadioButton.setBounds(0, 21, 111, 23);
+		rdbtnNewRadioButton.setSelected(true);
+		rdbtnNewRadioButton.setActionCommand(Constants.ENCRYPT);
 		panel_1.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Decrypt");
+		rdbtnNewRadioButton_1.setActionCommand(Constants.DECRYPT);
 		rdbtnNewRadioButton_1.setBounds(115, 21, 111, 23);
 		panel_1.add(rdbtnNewRadioButton_1);
+		buttonGroup = new ButtonGroup();
+		buttonGroup.add(rdbtnNewRadioButton);
+		buttonGroup.add(rdbtnNewRadioButton_1);
 		
-		JLabel lblNewLabel_3 = new JLabel("Enter your matrix n*n");
+		JLabel lblNewLabel_3 = new JLabel("Enter your matrix 2*2");
 		lblNewLabel_3.setBounds(0, 51, 150, 14);
 		panel_1.add(lblNewLabel_3);
 		
-		JTextArea textArea_2 = new JTextArea();
-		textArea_2.setRows(10);
-		textArea_2.setBounds(0, 80, 226, 71);
-		panel_1.add(textArea_2);
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(0, 80, 226, 71);
+		panel_1.add(scrollPane_2);
+		
+		key = new JTextArea();
+		scrollPane_2.setViewportView(key);
+		key.setRows(10);
 		
 		JButton btnNewButton = new JButton("Import Key");
 		btnNewButton.setForeground(SystemColor.text);
@@ -108,6 +140,34 @@ public class HillPresentation extends JPanel {
 		JButton btnNewButton_4 = new JButton("Start");
 		btnNewButton_4.setBounds(70, 329, 89, 23);
 		panel_1.add(btnNewButton_4);
+		btnNewButton_4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				execute();
+			}
+		});
+	}
+	@Override
+	public void execute() {
+		String mode = buttonGroup.getSelection().getActionCommand();
+		if (mode.equals(Constants.ENCRYPT)) {
+			String result = Hill.getInstance().encrypt(taText.getText(), key.getText());
+			taResult.setText(result);
+		} else {
+			String result = Hill.getInstance().decrypt(taText.getText(), key.getText());
+			taResult.setText(result);
+		}
+	}
+	@Override
+	public void loadText(String type) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void saveFile(String type) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
