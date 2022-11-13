@@ -202,11 +202,15 @@ public class VigenerePresentation extends JPanel implements IPresentation {
 		JFileChooser jFileChooser = new JFileChooser();
 		jFileChooser.showOpenDialog(this);
 		File file = jFileChooser.getSelectedFile();
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-		String s = "";
-		while ((s = bufferedReader.readLine()) != null) {
-			result += s;
-			taText.setText(result);
+		if(file.getName().split("\\.")[1].equals("txt")||file.getName().split("\\.")[1].equals("java")) {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			String s = "";
+			while ((s = bufferedReader.readLine()) != null) {
+				result += s;
+				taText.setText(result);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "File không lợp lệ");
 		}
 	}
 

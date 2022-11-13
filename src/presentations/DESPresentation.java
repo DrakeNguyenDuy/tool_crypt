@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 
 import business.DES;
 import helppers.Constants;
+import helppers.EnToVi;
 import helppers.ReadFile;
 import helppers.WriteFile;
 
@@ -39,7 +40,7 @@ public class DESPresentation extends JPanel implements IPresentation {
 	private ButtonGroup buttonGroup;
 	private byte[] byteText = null;
 	private byte[] byteResult = null;
-	private byte[] byteKey=null;
+	private byte[] byteKey = null;
 
 	public DESPresentation() {
 		setBorder(new EmptyBorder(0, 5, 5, 0));
@@ -204,11 +205,7 @@ public class DESPresentation extends JPanel implements IPresentation {
 
 	private void createKey() {
 		byte[] encode = DES.getInstance().createKey().getEncoded();
-		String key = "";
-		for (byte b : encode) {
-			key += Byte.toString(b);
-		}
-		taKey.setText(key);
+		taKey.setText(Base64.getEncoder().encodeToString(encode));
 		taKeyLength.setText("56");
 	}
 
@@ -217,13 +214,15 @@ public class DESPresentation extends JPanel implements IPresentation {
 		String mode = buttonGroup.getSelection().getActionCommand();
 		if (mode.equals(Constants.ENCRYPT)) {
 //			DES.getInstance().createKey();
-			byte[] byteEncypt = DES.getInstance().encrypt(byteText != null ? byteText : taText.getText().getBytes());
+			String text = EnToVi.translateEn2Vi(taText.getText().replaceAll("\\s+",""));
+			byte[] byteEncypt = DES.getInstance().encrypt(Base64.getDecoder().decode(text));
 			byteResult = byteEncypt;
-			taResult.setText(byteResult.length == 0 ? "" : new String(byteEncypt));
+			taResult.setText(byteResult.length == 0 ? "" : Base64.getEncoder().encodeToString(byteEncypt));
 		} else {
-			byte[] byteDecypt = DES.getInstance().decypt(byteText != null ? byteText : taText.getText().getBytes());
+			String text = EnToVi.translateEn2Vi(taText.getText().replaceAll("\\s+",""));
+			byte[] byteDecypt = DES.getInstance().decypt(Base64.getDecoder().decode(text));
 			byteResult = byteDecypt;
-			taResult.setText(byteResult.length == 0 ? "" : new String(byteDecypt));
+			taResult.setText(byteResult.length == 0 ? "" : Base64.getEncoder().encodeToString(byteDecypt));
 		}
 
 	}
@@ -239,7 +238,7 @@ public class DESPresentation extends JPanel implements IPresentation {
 			String s = new String(byteText);
 			taText.setText(s);
 		} else {
-			byteKey=DES.getInstance().loadKey(path);
+			byteKey = DES.getInstance().loadKey(path);
 			System.out.println(byteKey.length);
 			taKey.setText(new String(byteKey));
 			taKeyLength.setText("56");

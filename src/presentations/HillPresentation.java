@@ -3,6 +3,11 @@ package presentations;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.util.Base64;
@@ -11,6 +16,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -120,6 +126,12 @@ public class HillPresentation extends JPanel implements IPresentation{
 		btnNewButton_1.setForeground(SystemColor.text);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					loadText(null);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_1.setBounds(115, 186, 111, 23);
@@ -130,6 +142,14 @@ public class HillPresentation extends JPanel implements IPresentation{
 		btnNewButton_2.setForeground(SystemColor.text);
 		btnNewButton_2.setBounds(0, 238, 105, 23);
 		panel_1.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveFile(null);
+				
+			}
+		});
 		
 		JButton btnNewButton_3 = new JButton("Save Key");
 		btnNewButton_3.setForeground(SystemColor.text);
@@ -161,13 +181,37 @@ public class HillPresentation extends JPanel implements IPresentation{
 	}
 	@Override
 	public void loadText(String type) throws IOException {
-		// TODO Auto-generated method stub
-		
+		String result = "";
+		JFileChooser jFileChooser = new JFileChooser();
+		jFileChooser.showOpenDialog(this);
+		File file = jFileChooser.getSelectedFile();
+		System.out.println(file.getName().split("\\.")[1]);
+		if(file.getName().split("\\.")[1].equals("txt")||file.getName().split("\\.")[1].equals("java")) {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			String s = "";
+			while ((s = bufferedReader.readLine()) != null) {
+				result += s;
+				taText.setText(result);
+			}	
+		}else {
+			JOptionPane.showMessageDialog(this, "File không lợp lệ");
+		}
 	}
 	@Override
 	public void saveFile(String type) {
-		// TODO Auto-generated method stub
-		
+		try {
+			JFileChooser jFileChooser = new JFileChooser();
+			jFileChooser.showSaveDialog(this);
+			String path = jFileChooser.getCurrentDirectory() + "\\" + jFileChooser.getSelectedFile().getName();
+			File file = new File(path);
+			BufferedWriter bufferedWriter= new BufferedWriter(new FileWriter(file));
+			bufferedWriter.write(taResult.getText());
+			bufferedWriter.flush();
+			bufferedWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
