@@ -4,16 +4,23 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.util.Base64;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import business.Hill;
+import business.RSA;
 import helppers.Constants;
 
 import javax.swing.JScrollPane;
@@ -22,6 +29,7 @@ public class HillPresentation extends JPanel implements IPresentation{
 	private JTextArea taText;
 	private JTextArea taResult;
 	private ButtonGroup buttonGroup;
+	private JTextArea key;
 	/**
 	 * Create the panel.
 	 */
@@ -93,9 +101,9 @@ public class HillPresentation extends JPanel implements IPresentation{
 		scrollPane_2.setBounds(0, 80, 226, 71);
 		panel_1.add(scrollPane_2);
 		
-		JTextArea textArea_2 = new JTextArea();
-		scrollPane_2.setViewportView(textArea_2);
-		textArea_2.setRows(10);
+		key = new JTextArea();
+		scrollPane_2.setViewportView(key);
+		key.setRows(10);
 		
 		JButton btnNewButton = new JButton("Import Key");
 		btnNewButton.setForeground(SystemColor.text);
@@ -132,11 +140,24 @@ public class HillPresentation extends JPanel implements IPresentation{
 		JButton btnNewButton_4 = new JButton("Start");
 		btnNewButton_4.setBounds(70, 329, 89, 23);
 		panel_1.add(btnNewButton_4);
+		btnNewButton_4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				execute();
+			}
+		});
 	}
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+		String mode = buttonGroup.getSelection().getActionCommand();
+		if (mode.equals(Constants.ENCRYPT)) {
+			String result = Hill.getInstance().encrypt(taText.getText(), key.getText());
+			taResult.setText(result);
+		} else {
+			String result = Hill.getInstance().decrypt(taText.getText(), key.getText());
+			taResult.setText(result);
+		}
 	}
 	@Override
 	public void loadText(String type) throws IOException {
